@@ -1,30 +1,22 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { RouteTransition } from "../route-transition.service";
-import { Subscription } from "rxjs/Subscription";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageTransition, RouteTransition } from '../route-transition.service';
 
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css']
 })
-export class RecipesComponent implements OnInit, OnDestroy {
+export class RecipesComponent implements OnInit, PageTransition {
   @ViewChild('page') page: ElementRef;
-  private pageSubscription = new Subscription();
 
-  constructor(protected router: Router, protected route: ActivatedRoute, private routeTransition: RouteTransition) {
-    this.pageSubscription = this.routeTransition.unloadPage.subscribe((data) => {
-      if ( data.length === 1 ) {
-        this.routeTransition.animatePageOut(this.page, data);
-      }
-    });
-  }
+  constructor(protected router: Router, protected route: ActivatedRoute, private routeTransition: RouteTransition) { }
 
   ngOnInit() {
     this.routeTransition.animatePageIn(this.page);
   }
 
-  ngOnDestroy() {
-    this.pageSubscription.unsubscribe();
+  test() {
+    alert('sakis');
   }
 }

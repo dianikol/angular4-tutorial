@@ -22,7 +22,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   goTo(to) {
-    this.routeTransition.unloadPage.next(to);
+    this.router.navigate(to);
   }
 
   ngOnInit() {

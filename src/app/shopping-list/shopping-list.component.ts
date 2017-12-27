@@ -3,24 +3,19 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
-import { RouteTransition } from "../route-transition.service";
+import { PageTransition, RouteTransition } from "../route-transition.service";
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css']
 })
-export class ShoppingListComponent implements OnInit, OnDestroy {
+export class ShoppingListComponent implements OnInit, OnDestroy, PageTransition {
   @ViewChild('page') page: ElementRef;
   ingredients: Ingredient[];
   private subscription: Subscription;
-  private pageSubscription = new Subscription();
 
-  constructor(private slService: ShoppingListService, private routeTransition: RouteTransition) {
-    this.pageSubscription = this.routeTransition.unloadPage.subscribe((data) => {
-      this.routeTransition.animatePageOut(this.page, data);
-    });
-  }
+  constructor(private slService: ShoppingListService, private routeTransition: RouteTransition) { }
 
   ngOnInit() {
     this.routeTransition.animatePageIn(this.page);
@@ -38,7 +33,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.pageSubscription.unsubscribe();
     this.subscription.unsubscribe();
   }
 }

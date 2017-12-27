@@ -3,13 +3,12 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { HomeComponent } from './core/home/home.component';
-import { RouteTransition } from "./route-transition.service";
-
+import { RouteTransition } from './route-transition.service';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canDeactivate: [] },
-  { path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule', canActivate: []},
-  { path: 'shopping-list', component: ShoppingListComponent }
+  { path: '', component: HomeComponent, canDeactivate: [RouteTransition] },
+  { path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule' },
+  { path: 'shopping-list', component: ShoppingListComponent, canDeactivate: [RouteTransition] }
 ];
 
 @NgModule({
